@@ -105,6 +105,27 @@ def list_models():
     print("-" * 80)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='下载Wan2.1模型')
+    parser.add_argument(
+        '--model_type',
+        type=str,
+        required=True,
+        choices=list(MODEL_CONFIGS.keys()),
+        help='要下载的模型类型')
+    parser.add_argument(
+        '--ckpt_dir_720p',
+        type=str,
+        default=None,
+        help='720P模型的checkpoint目录')
+    parser.add_argument(
+        '--cache_dir',
+        type=str,
+        default=None,
+        help='模型缓存目录')
+    return parser.parse_args()
+
+
 def main():
     parser = argparse.ArgumentParser(description="从ModelScope下载万相(Wan2.1)大模型")
     parser.add_argument(
