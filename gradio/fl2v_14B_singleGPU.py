@@ -71,32 +71,33 @@ def prompt_enc(prompt, img_first, img_last, tar_lang):
 
 def flf2v_generation(flf2vid_prompt, flf2vid_image_first, flf2vid_image_last, resolution, sd_steps,
                    guide_scale, shift_scale, seed, n_prompt):
+
     if resolution == '------':
-        print('Please specify the resolution ckpt dir or specify the resolution')
+        print(
+            'Please specify the resolution ckpt dir or specify the resolution'
+        )
         return None
 
-    # 添加模型检查
-    global wan_flf2v_720P
-    if wan_flf2v_720P is None:
-        print('Model is not loaded. Please select resolution first and wait for model loading to complete.')
-        return None
-
-    if resolution == '720P':
-        video = wan_flf2v_720P.generate(
-            flf2vid_prompt,
-            flf2vid_image_first,
-            flf2vid_image_last,
-            max_area=MAX_AREA_CONFIGS['720*1280'],
-            shift=shift_scale,
-            sampling_steps=sd_steps,
-            guide_scale=guide_scale,
-            n_prompt=n_prompt,
-            seed=seed,
-            offload_model=True)
-        pass
     else:
-        print('Sorry, currently only 720P is supported.')
-        return None
+        if resolution == '720P':
+            global wan_flf2v_720P
+            video = wan_flf2v_720P.generate(
+                flf2vid_prompt,
+                flf2vid_image_first,
+                flf2vid_image_last,
+                max_area=MAX_AREA_CONFIGS['720*1280'],
+                shift=shift_scale,
+                sampling_steps=sd_steps,
+                guide_scale=guide_scale,
+                n_prompt=n_prompt,
+                seed=seed,
+                offload_model=True)
+            pass
+        else:
+            print(
+                'Sorry, currently only 720P is supported.'
+            )
+            return None
 
         cache_video(
             tensor=video[None],
