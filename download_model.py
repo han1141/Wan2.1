@@ -85,8 +85,7 @@ def download_model(model_type, output_dir, resume=True, force=False):
         print("正在下载模型文件，这可能需要一些时间...")
         model_dir = snapshot_download(
             model_id=model_id,
-            cache_dir=output_dir,
-            progress=True
+            cache_dir=output_dir
         )
         print(f"\n模型下载完成！保存在: {model_dir}")
         return True
